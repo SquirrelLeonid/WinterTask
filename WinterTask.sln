@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinterTask", "WinterTask\WinterTask.csproj", "{DF5F3E08-499D-432C-AE43-A95512F75B82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotGames", "BotGames\BotGames.csproj", "{7B76EC28-5400-4267-9945-A3AF6E928590}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF5F3E08-499D-432C-AE43-A95512F75B82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF5F3E08-499D-432C-AE43-A95512F75B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF5F3E08-499D-432C-AE43-A95512F75B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF5F3E08-499D-432C-AE43-A95512F75B82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B76EC28-5400-4267-9945-A3AF6E928590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B76EC28-5400-4267-9945-A3AF6E928590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B76EC28-5400-4267-9945-A3AF6E928590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B76EC28-5400-4267-9945-A3AF6E928590}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {16897DEA-C25C-419E-A300-B1BBEC4D2651}
+	EndGlobalSection
+EndGlobal
