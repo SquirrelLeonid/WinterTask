@@ -7,26 +7,41 @@ namespace BotGames.Thousand
     {
         private readonly DiceRoller diceRoller;
         private readonly List<RollInfo> diceRolls;
+        public int Scores;
 
-        public TurnKeeper()
+        public TurnKeeper(Player player)
         {
             diceRoller = new DiceRoller();
             diceRolls = new List<RollInfo>();
+            Player = player;
         }
+
+        public Player Player { get; }
 
         private int FreeDices => diceRolls.LastOrDefault()?.LeftDices ?? 5;
 
-        public void MakeRoll()
+        public RollInfo MakeRoll()
         {
             var diceRoll = diceRoller.RollNextDices(FreeDices).ToArray();
             var rollInfo = DiceRollAnalyzer.AnalyzeDiceRoll(diceRoll);
 
             diceRolls.Add(rollInfo);
+            if (!IsRollEffective(rollInfo))
+                Scores = 0;
+            else
+                Scores += rollInfo.Scores;
+
+            return rollInfo;
         }
 
-        public bool CanRoll()
+        public bool IsLastRollWasEffective()
         {
-            return diceRolls.Last().Scores > 0;
+            return IsRollEffective(diceRolls.Last());
+        }
+
+        private bool IsRollEffective(RollInfo rollInfo)
+        {
+            return rollInfo.Scores > 0;
         }
     }
 }
