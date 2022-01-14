@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinterTask", "WinterTask\WinterTask.csproj", "{DF5F3E08-499D-432C-AE43-A95512F75B82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotGames", "BotGames\BotGames.csproj", "{7B76EC28-5400-4267-9945-A3AF6E928590}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotGames", "BotGames\BotGames.csproj", "{7B76EC28-5400-4267-9945-A3AF6E928590}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotGamesTests", "BotGamesTests\BotGamesTests.csproj", "{CBF0822D-4DFE-4F2E-9438-8292E9CD81FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotGamesTests", "BotGamesTests\BotGamesTests.csproj", "{CBF0822D-4DFE-4F2E-9438-8292E9CD81FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
