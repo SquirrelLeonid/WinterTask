@@ -1,19 +1,21 @@
 ﻿using System;
+using System.Threading;
 using Telegram.Bot;
-using WinterTask.TelegramBot;
+using WinterTask.Bots.DiscordBot;
+using WinterTask.Bots.TelegramBot;
 
 namespace WinterTask
 {
     internal class Program
     {
-        private const string Token = "5030819786:AAFQCHcxdIxcr1c3ihCfdwSaQn_zBFOKiY0";
-
         private static void Main(string[] args)
         {
             var telegramBot = TelegramBotFactory.CreateTelegramBot();
+            var discordBot = DiscordBotFactory.CreateDiscordBot();
+
+            Thread.Sleep(2000);
 
             var me = telegramBot.GetMeAsync().Result;
-
             Console.WriteLine($"Start listening for @{me.Username}");
             Console.ReadLine();
         }

@@ -1,4 +1,4 @@
-﻿namespace WinterTask.TelegramBot
+﻿namespace WinterTask.Bots
 {
     public interface IBot
     {

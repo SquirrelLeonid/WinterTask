@@ -1,6 +1,6 @@
 ﻿using Telegram.Bot;
 
-namespace WinterTask.TelegramBot
+namespace WinterTask.Bots.TelegramBot
 {
     public class TelegramBotFactory
     {

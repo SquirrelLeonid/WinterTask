@@ -7,7 +7,7 @@ using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
-namespace WinterTask.TelegramBot
+namespace WinterTask.Bots.TelegramBot
 {
     public class TelegramBotHandler : TelegramBotClient, IBot, IDisposable
     {
@@ -23,7 +23,6 @@ namespace WinterTask.TelegramBot
 
         public void ReplyToMessage(string message, string id)
         {
-            throw new NotImplementedException();
         }
 
         public void Dispose()
