@@ -1,4 +1,4 @@
-﻿namespace WinterTask.Bots
+﻿namespace WinterTask.Clients
 {
     public interface IGameBot
     {

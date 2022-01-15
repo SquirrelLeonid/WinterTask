@@ -8,9 +8,9 @@ using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
-namespace WinterTask.Bots.TelegramBot
+namespace WinterTask.Clients.TelegramClient
 {
-    public class TelegramGameBotHandler : TelegramBotClient, IGameBot, IDisposable
+    public class TelegramClient : TelegramBotClient, IClient
     {
         private const string Token = "5030819786:AAFQCHcxdIxcr1c3ihCfdwSaQn_zBFOKiY0";
         private readonly CancellationTokenSource cts;
@@ -18,7 +18,7 @@ namespace WinterTask.Bots.TelegramBot
         private readonly ReceiverOptions receiverOptions;
         private readonly HashSet<Timer> timers;
 
-        public TelegramGameBotHandler() : base(Token)
+        public TelegramClient() : base(Token)
         {
             cts = new CancellationTokenSource();
             receiverOptions = new ReceiverOptions();
@@ -26,13 +26,23 @@ namespace WinterTask.Bots.TelegramBot
             polls = new Dictionary<string, List<User>>();
         }
 
-        public void Dispose()
+        public void ReplyToMessage(string id, string message)
         {
-            cts.Cancel();
+            throw new NotImplementedException();
         }
 
-        public void ReplyToMessage(string message, string id)
+        public void LaunchClient()
         {
+            this.StartReceiving(
+                OnUpdateAsync,
+                OnErrorAsync,
+                receiverOptions,
+                cts.Token);
+        }
+
+        public void ShutdownClient()
+        {
+            cts.Cancel();
         }
 
         public async void CreateStartGameTask(long chatId)
@@ -47,15 +57,6 @@ namespace WinterTask.Bots.TelegramBot
                 },
                 false,
                 cancellationToken: cts.Token);
-        }
-
-        public void LaunchBot()
-        {
-            this.StartReceiving(
-                OnUpdateAsync,
-                OnErrorAsync,
-                receiverOptions,
-                cts.Token);
         }
 
         private async Task OnUpdateAsync(
