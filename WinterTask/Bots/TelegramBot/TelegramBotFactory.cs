@@ -1,12 +1,10 @@
-﻿using Telegram.Bot;
-
-namespace WinterTask.Bots.TelegramBot
+﻿namespace WinterTask.Bots.TelegramBot
 {
     public class TelegramBotFactory
     {
-        public static ITelegramBotClient CreateTelegramBot()
+        public static TelegramGameBotHandler CreateTelegramBot()
         {
-            var bot = new TelegramBotHandler();
+            var bot = new TelegramGameBotHandler();
             bot.LaunchBot();
             return bot;
         }

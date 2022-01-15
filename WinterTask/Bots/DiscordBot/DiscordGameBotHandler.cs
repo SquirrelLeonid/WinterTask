@@ -5,11 +5,16 @@ using Discord.WebSocket;
 
 namespace WinterTask.Bots.DiscordBot
 {
-    public class DiscordBotHandler : DiscordSocketClient, IBot
+    public class DiscordGameBotHandler : DiscordSocketClient, IGameBot
     {
         private const string Token = "NjM2MTc4MTkzMDE5MzA1OTk1.Xa71HA.PczBWKnKTbIx9IQH4_yZjguS-wg";
 
         public void ReplyToMessage(string message, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateStartGameTask(long chatId)
         {
             throw new NotImplementedException();
         }

@@ -6,7 +6,7 @@ namespace WinterTask.Bots.DiscordBot
     {
         public static IDiscordClient CreateDiscordBot()
         {
-            var bot = new DiscordBotHandler();
+            var bot = new DiscordGameBotHandler();
             bot.LaunchBot();
             return bot;
         }

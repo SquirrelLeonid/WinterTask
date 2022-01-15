@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Threading;
 using Telegram.Bot;
-using WinterTask.Bots.DiscordBot;
 using WinterTask.Bots.TelegramBot;
 
 namespace WinterTask
@@ -11,11 +9,10 @@ namespace WinterTask
         private static void Main(string[] args)
         {
             var telegramBot = TelegramBotFactory.CreateTelegramBot();
-            var discordBot = DiscordBotFactory.CreateDiscordBot();
-
-            Thread.Sleep(2000);
+            //var discordBot = DiscordBotFactory.CreateDiscordBot();
 
             var me = telegramBot.GetMeAsync().Result;
+
             Console.WriteLine($"Start listening for @{me.Username}");
             Console.ReadLine();
         }
