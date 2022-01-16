@@ -10,7 +10,7 @@ namespace WinterTask
             var telegramBot = BotClientFactory.GetBotClient(BotType.Telegram);
             var discordBot = BotClientFactory.GetBotClient(BotType.Discord);
             telegramBot.LaunchClient();
-            discordBot.LaunchClient();
+            //discordBot.LaunchClient();
 
             Console.ReadLine();
         }

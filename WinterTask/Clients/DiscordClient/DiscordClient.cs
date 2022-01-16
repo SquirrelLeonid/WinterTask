@@ -5,14 +5,9 @@ using Discord.WebSocket;
 
 namespace WinterTask.Clients.DiscordClient
 {
-    public class DiscordGameBot : DiscordSocketClient, IClient
+    public class DiscordClient : DiscordSocketClient, IClient
     {
         private const string Token = "NjM2MTc4MTkzMDE5MzA1OTk1.Xa71HA.PczBWKnKTbIx9IQH4_yZjguS-wg";
-
-        public void ReplyToMessage(string id, string message)
-        {
-            throw new NotImplementedException();
-        }
 
         public async void LaunchClient()
         {
@@ -22,6 +17,11 @@ namespace WinterTask.Clients.DiscordClient
         }
 
         public void ShutdownClient()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SendMessage(string chatId, string message)
         {
             throw new NotImplementedException();
         }

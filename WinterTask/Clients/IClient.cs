@@ -4,7 +4,7 @@
     {
         public void LaunchClient();
 
-        public void ReplyToMessage(string id, string message);
+        public void SendMessage(string chatId, string message);
 
         public void ShutdownClient();
     }

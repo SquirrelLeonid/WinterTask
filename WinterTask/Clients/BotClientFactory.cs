@@ -1,5 +1,4 @@
 ﻿using System;
-using WinterTask.Clients.DiscordClient;
 
 namespace WinterTask.Clients
 {
@@ -10,7 +9,7 @@ namespace WinterTask.Clients
             return clientType switch
             {
                 BotType.Telegram => new TelegramClient.TelegramClient(),
-                BotType.Discord => new DiscordGameBot(),
+                BotType.Discord => new DiscordClient.DiscordClient(),
                 _ => throw new ArgumentException($"Unknown bot type {clientType}")
             };
         }
