@@ -4,6 +4,6 @@ namespace WinterTask
 {
     public interface IChatBot
     {
-        public void ReplyToMessage(IClient botClient, string message);
+        public BotReply ReplyToMessage(IClient botClient, string message);
     }
 }

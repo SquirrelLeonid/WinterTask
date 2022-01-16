@@ -7,7 +7,7 @@
             var scores = DiceRollScoreCounter.CountScore(diceRoll);
             var dicesLeft = FreeDiceCounter.CountFreeDices(diceRoll);
 
-            return new RollInfo(scores, dicesLeft);
+            return new RollInfo(diceRoll, scores, dicesLeft);
         }
     }
 }

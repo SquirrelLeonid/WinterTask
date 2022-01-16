@@ -38,7 +38,7 @@ namespace BotGames.Thousand
             return !IsEnd() && turnKeeper.IsLastRollWasEffective();
         }
 
-        public void FinishTurn()
+        public int FinishTurn()
         {
             if (turnKeeper.Scores > 0)
             {
@@ -66,9 +66,16 @@ namespace BotGames.Thousand
                 scoreboardKeeper.Scoreboard[players[currentPlayerPointer]] = scores - scores % 100;
             }
 
+            var scoresPerTurn = turnKeeper.Scores;
             currentPlayerPointer += 1;
             currentPlayerPointer %= players.Count;
             turnKeeper = new TurnKeeper(CurrentPlayer);
+            return scoresPerTurn;
+        }
+
+        public string GetScoreBoard()
+        {
+            return scoreboardKeeper.GetStringScoreBoard();
         }
 
         private bool CheckDumpTrack()

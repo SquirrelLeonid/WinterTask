@@ -19,6 +19,8 @@ namespace BotGames.Thousand
                                && pair.Key != 5)
                 .Select(pair => pair.Value)
                 .Sum();
+            if (count == diceRoll.Length)
+                return 0;
 
             return count == 0 ? 5 : count;
         }

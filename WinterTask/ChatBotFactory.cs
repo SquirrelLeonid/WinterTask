@@ -2,9 +2,9 @@
 {
     public class ChatBotFactory
     {
-        public static IChatBot CreateChatBot()
+        public static IChatBot CreateChatBot(long chatId)
         {
-            return new ChatBot();
+            return new ChatBot(chatId);
         }
     }
 }

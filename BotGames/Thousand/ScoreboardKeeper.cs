@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using ConsoleTables;
 
 namespace BotGames.Thousand
@@ -17,10 +16,16 @@ namespace BotGames.Thousand
 
         public string GetStringScoreBoard()
         {
-            var playerNames = Scoreboard.Keys.Select(player => player.PlayerName).ToArray();
-            var table = new ConsoleTable(playerNames);
+            var playerNames = new List<string>();
+            var values = new List<object>();
+            foreach (var pair in Scoreboard)
+            {
+                playerNames.Add(pair.Key.PlayerName);
+                values.Add(pair.Value);
+            }
 
-            table.AddRow(Scoreboard.Values);
+            var table = new ConsoleTable(playerNames.ToArray());
+            table.AddRow(values.ToArray());
 
             return table.ToMinimalString();
         }

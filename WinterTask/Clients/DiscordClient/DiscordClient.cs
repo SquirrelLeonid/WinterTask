@@ -21,7 +21,17 @@ namespace WinterTask.Clients.DiscordClient
             throw new NotImplementedException();
         }
 
-        public void SendMessage(string chatId, string message)
+        public Task<int> CreatePoll(long chatId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User[]> GetPollUsers(int pollMessageId, long chatId)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IClient.ReplyMessage(long chatId, string message)
         {
             throw new NotImplementedException();
         }
@@ -30,6 +40,11 @@ namespace WinterTask.Clients.DiscordClient
         {
             Console.WriteLine(msg.ToString());
             return Task.CompletedTask;
+        }
+
+        public void ReplyMessage(long chatId, string message)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace WinterTask.Clients.TelegramClient
     public class TelegramClient : TelegramBotClient, IClient
     {
         private const string Token = "5030819786:AAFQCHcxdIxcr1c3ihCfdwSaQn_zBFOKiY0";
+        private readonly BotMessageMaker botMessageMaker;
         private readonly Dictionary<long, IChatBot> bots;
         private readonly CancellationTokenSource cts = new();
         private readonly Dictionary<string, List<User>> polls;
@@ -24,6 +25,7 @@ namespace WinterTask.Clients.TelegramClient
             receiverOptions.ThrowPendingUpdates = true;
             bots = new Dictionary<long, IChatBot>();
             polls = new Dictionary<string, List<User>>();
+            botMessageMaker = new BotMessageMaker();
         }
 
         public void LaunchClient()
@@ -42,12 +44,27 @@ namespace WinterTask.Clients.TelegramClient
             cts.Cancel();
         }
 
-        public void SendMessage(string chatId, string message)
+        public async Task ReplyMessage(long chatId, string message)
         {
-            throw new NotImplementedException();
+            if (!bots.ContainsKey(chatId))
+                bots[chatId] = ChatBotFactory.CreateChatBot(chatId);
+            var botReply = bots[chatId].ReplyToMessage(this, message);
+            var botMessage = botMessageMaker.GetMessage(botReply);
+            await SendTextMessage(chatId, botMessage.Text);
         }
 
-        public async void CreateStartGameTask(long chatId)
+        public async Task<User[]> GetPollUsers(int pollMessageId, long chatId)
+        {
+            var poll = await this.StopPollAsync(
+                chatId,
+                pollMessageId,
+                cancellationToken: cts.Token);
+            var users = polls[poll.Id];
+            polls.Remove(poll.Id);
+            return users.ToArray();
+        }
+
+        public async Task<int> CreatePoll(long chatId)
         {
             var question = "Do you want to play?";
             var options = new[]
@@ -63,6 +80,7 @@ namespace WinterTask.Clients.TelegramClient
                 allowsMultipleAnswers: false,
                 isAnonymous: false,
                 cancellationToken: cts.Token);
+            return pollMessage.MessageId;
         }
 
         private async Task OnUpdateAsync(
@@ -79,12 +97,7 @@ namespace WinterTask.Clients.TelegramClient
             if (update.Type == UpdateType.Message)
             {
                 Console.WriteLine($"Received a '{messageText}' message in chat {chatId.Value}.");
-                CreateStartGameTask(chatId.Value);
-
-                if (!bots.ContainsKey(chatId.Value))
-                    bots[chatId.Value] = ChatBotFactory.CreateChatBot();
-
-                bots[chatId.Value].ReplyToMessage(this, messageText);
+                await ReplyMessage(chatId.Value, messageText);
             }
 
             if (update.Type == UpdateType.PollAnswer && update.PollAnswer is not null)
@@ -93,16 +106,10 @@ namespace WinterTask.Clients.TelegramClient
                 if (!polls.ContainsKey(answer.PollId))
                     polls[answer.PollId] = new List<User>();
 
-                polls[answer.PollId].Add(answer.User);
+                polls[answer.PollId].Add(new User(answer.User.Id, answer.User.Username));
 
                 Console.WriteLine(answer.User.Username + $" answered '{answer.OptionIds.First()}'");
             }
-
-
-            //var sentMessage = await botClient.SendTextMessageAsync(
-            //    chatId.Value,
-            //    "You said:\n" + messageText,
-            //    cancellationToken: cancellationToken);
         }
 
         private bool ShouldContinue(Update update)
@@ -136,11 +143,11 @@ namespace WinterTask.Clients.TelegramClient
             return Task.CompletedTask;
         }
 
-        public async void CreateGame(Message pollMessage)
+        private async Task SendTextMessage(long chatId, string text)
         {
-            var poll = await this.StopPollAsync(
-                pollMessage.Chat.Id,
-                pollMessage.MessageId,
+            await this.SendTextMessageAsync(
+                chatId,
+                text,
                 cancellationToken: cts.Token);
         }
     }

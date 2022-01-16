@@ -1,11 +1,17 @@
-﻿namespace WinterTask.Clients
+﻿using System.Threading.Tasks;
+
+namespace WinterTask.Clients
 {
     public interface IClient
     {
         public void LaunchClient();
 
-        public void SendMessage(string chatId, string message);
+        public Task ReplyMessage(long chatId, string message);
 
         public void ShutdownClient();
+
+        public Task<int> CreatePoll(long chatId);
+
+        public Task<User[]> GetPollUsers(int pollMessageId, long chatId);
     }
 }
