@@ -8,6 +8,7 @@ using Telegram.Bot.Exceptions;
 using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace WinterTask.Clients.TelegramClient
 {
@@ -50,7 +51,7 @@ namespace WinterTask.Clients.TelegramClient
                 bots[chatId] = ChatBotFactory.CreateChatBot(chatId);
             var botReply = bots[chatId].ReplyToMessage(this, message);
             var botMessage = botMessageMaker.GetMessage(botReply);
-            await SendTextMessage(chatId, botMessage.Text);
+            await SendTextMessage(chatId, botMessage.Text, botMessage.AvailableOperations);
         }
 
         public async Task<User[]> GetPollUsers(int pollMessageId, long chatId)
@@ -91,10 +92,10 @@ namespace WinterTask.Clients.TelegramClient
             if (!ShouldContinue(update))
                 return;
 
-            var chatId = update.Message?.Chat.Id;
-            var messageText = update.Message?.Text;
+            var chatId = update.Message?.Chat.Id ?? update.CallbackQuery?.Message?.Chat.Id;
+            var messageText = update.Message?.Text ?? update.CallbackQuery?.Data;
 
-            if (update.Type == UpdateType.Message)
+            if (update.Type == UpdateType.Message || update.Type == UpdateType.CallbackQuery)
             {
                 Console.WriteLine($"Received a '{messageText}' message in chat {chatId.Value}.");
                 await ReplyMessage(chatId.Value, messageText);
@@ -122,6 +123,9 @@ namespace WinterTask.Clients.TelegramClient
             if (update.Type == UpdateType.PollAnswer)
                 return true;
 
+            if (update.Type == UpdateType.CallbackQuery)
+                return true;
+
             return false;
         }
 
@@ -143,11 +147,32 @@ namespace WinterTask.Clients.TelegramClient
             return Task.CompletedTask;
         }
 
-        private async Task SendTextMessage(long chatId, string text)
+        private async Task SendTextMessage(long chatId, string text, Dictionary<string, string> availableCommands)
         {
+            var rows = new List<List<InlineKeyboardButton>>();
+            List<InlineKeyboardButton> row = null;
+            var i = 0;
+            foreach (var pair in availableCommands)
+            {
+                if (i % 2 == 0)
+                {
+                    if (row != null)
+                        rows.Add(row);
+                    row = new List<InlineKeyboardButton>();
+                }
+
+                row?.Add(InlineKeyboardButton.WithCallbackData(pair.Value, pair.Key));
+                i++;
+            }
+
+            if (row != null && row.Count != 0)
+                rows.Add(row);
+            var markup = new InlineKeyboardMarkup(rows);
+
             await this.SendTextMessageAsync(
                 chatId,
                 text,
+                replyMarkup: markup,
                 cancellationToken: cts.Token);
         }
     }

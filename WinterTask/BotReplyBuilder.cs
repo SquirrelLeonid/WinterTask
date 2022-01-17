@@ -6,6 +6,7 @@ namespace WinterTask
     public class BotReplyBuilder
     {
         private readonly List<ReplyType> replyTypes;
+        private string[] availableCommands;
         private RollInfo rollInfo;
         private string scoreBoard;
         private int scores;
@@ -39,9 +40,15 @@ namespace WinterTask
             return this;
         }
 
+        public BotReplyBuilder SetAvailableCommands(string[] commands)
+        {
+            availableCommands = commands;
+            return this;
+        }
+
         public BotReply BuildReply()
         {
-            return new BotReply(replyTypes, scoreBoard, rollInfo, scores);
+            return new BotReply(replyTypes, scoreBoard, rollInfo, scores, availableCommands);
         }
     }
 }

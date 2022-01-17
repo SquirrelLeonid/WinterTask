@@ -43,6 +43,7 @@ namespace WinterTask
                     break;
             }
 
+            replyBuilder.SetAvailableCommands(GetAvailableCommands());
             return replyBuilder.BuildReply();
         }
 
@@ -69,19 +70,19 @@ namespace WinterTask
             });
         }
 
-        public void ReplyHelp(BotReplyBuilder replyBuilder)
+        private void ReplyHelp(BotReplyBuilder replyBuilder)
         {
             replyBuilder.AddReplyType(ReplyType.Help);
         }
 
-        public void ReplyEndGame(BotReplyBuilder replyBuilder)
+        private void ReplyEndGame(BotReplyBuilder replyBuilder)
         {
             replyBuilder.AddReplyType(ReplyType.GameEnd);
-            game = null;
             ReplyBoard(replyBuilder);
+            game = null;
         }
 
-        public void ReplyEndTurn(BotReplyBuilder replyBuilder)
+        private void ReplyEndTurn(BotReplyBuilder replyBuilder)
         {
             var scores = game.FinishTurn();
             replyBuilder
@@ -91,14 +92,14 @@ namespace WinterTask
                 ReplyEndGame(replyBuilder);
         }
 
-        public void ReplyBoard(BotReplyBuilder replyBuilder)
+        private void ReplyBoard(BotReplyBuilder replyBuilder)
         {
             replyBuilder
                 .AddReplyType(ReplyType.ScoreBoard)
                 .SetBoard(game.GetScoreBoard());
         }
 
-        public void ReplyRoll(BotReplyBuilder replyBuilder)
+        private void ReplyRoll(BotReplyBuilder replyBuilder)
         {
             var rollInfo = game.MakeRoll();
             replyBuilder
@@ -106,6 +107,13 @@ namespace WinterTask
                 .SetRollInfo(rollInfo);
             if (rollInfo.LeftDices == 0)
                 ReplyEndTurn(replyBuilder);
+        }
+
+        private string[] GetAvailableCommands()
+        {
+            if (game == null)
+                return new[] { "start", "help" };
+            return new[] { "roll", "end_turn", "board", "end_game", "help" };
         }
     }
 }

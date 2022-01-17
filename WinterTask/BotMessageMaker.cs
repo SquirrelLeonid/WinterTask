@@ -11,12 +11,12 @@ namespace WinterTask
         public BotMessage GetMessage(BotReply reply)
         {
             if (!reply.ReplyTypes.Any())
-                return new BotMessage("I don't understand!");
+                return new BotMessage("I don't understand!", GetAvailableCommands(reply));
             var textFragments = new List<string>();
             foreach (var type in reply.ReplyTypes) textFragments.Add(GetReplyFragment(type, reply));
 
             var text = string.Join(Environment.NewLine, textFragments);
-            return new BotMessage(text);
+            return new BotMessage(text, GetAvailableCommands(reply));
         }
 
         public string GetReplyFragment(ReplyType replyType, BotReply reply)
@@ -60,8 +60,9 @@ namespace WinterTask
             builder.AppendLine("You roll next dices: " + string.Join(" ", rollInfo.DiceRolls));
             if (rollInfo.LeftDices > 0)
             {
-                builder.AppendLine("Your scores per roll: " + rollInfo.Scores);
+                builder.AppendLine("Your scores per roll: " + rollInfo.RollScores);
                 builder.AppendLine("You can reroll next dices count: " + rollInfo.LeftDices);
+                builder.AppendLine("Your scores per turn: " + rollInfo.TurnScores);
             }
             else
             {
@@ -69,6 +70,14 @@ namespace WinterTask
             }
 
             return builder.ToString();
+        }
+
+        public Dictionary<string, string> GetAvailableCommands(BotReply reply)
+        {
+            var availableCommands = new Dictionary<string, string>();
+            foreach (var command in reply.AvailableCommands) availableCommands["/" + command] = command;
+
+            return availableCommands;
         }
     }
 }

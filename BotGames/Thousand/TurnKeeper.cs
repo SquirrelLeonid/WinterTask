@@ -29,8 +29,8 @@ namespace BotGames.Thousand
             if (!IsRollEffective(rollInfo))
                 Scores = 0;
             else
-                Scores += rollInfo.Scores;
-
+                Scores += rollInfo.RollScores;
+            rollInfo.TurnScores = Scores;
             return rollInfo;
         }
 
@@ -41,7 +41,7 @@ namespace BotGames.Thousand
 
         private bool IsRollEffective(RollInfo rollInfo)
         {
-            return rollInfo.Scores > 0;
+            return rollInfo.RollScores > 0;
         }
     }
 }

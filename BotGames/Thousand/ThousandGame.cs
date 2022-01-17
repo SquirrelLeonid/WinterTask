@@ -63,7 +63,11 @@ namespace BotGames.Thousand
             else if (CheckPlayerInHole())
             {
                 var scores = scoreboardKeeper.Scoreboard[players[currentPlayerPointer]];
-                scoreboardKeeper.Scoreboard[players[currentPlayerPointer]] = scores - scores % 100;
+                if (scores % 100 == 2 || scores % 100 == 6)
+                {
+                    scoreboardKeeper.Scoreboard[players[currentPlayerPointer]] = scores - scores % 100;
+                    turnKeeper.Scores = 0;
+                }
             }
 
             var scoresPerTurn = turnKeeper.Scores;

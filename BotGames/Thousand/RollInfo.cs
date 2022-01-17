@@ -2,15 +2,16 @@
 {
     public class RollInfo
     {
-        public RollInfo(int[] diceRolls, int scores, int leftDices)
+        public RollInfo(int[] diceRolls, int rollScores, int leftDices)
         {
             DiceRolls = diceRolls;
-            Scores = scores;
+            RollScores = rollScores;
             LeftDices = leftDices;
         }
 
-        public int Scores { get; }
+        public int RollScores { get; }
         public int LeftDices { get; }
         public int[] DiceRolls { get; }
+        public int TurnScores { get; set; }
     }
 }
