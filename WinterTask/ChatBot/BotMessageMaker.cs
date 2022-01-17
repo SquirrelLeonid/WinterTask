@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using BotGames.Thousand;
 
-namespace WinterTask
+namespace WinterTask.ChatBot
 {
     public class BotMessageMaker
     {

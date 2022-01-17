@@ -1,4 +1,4 @@
-﻿namespace WinterTask
+﻿namespace WinterTask.ChatBot
 {
     public enum ReplyType
     {

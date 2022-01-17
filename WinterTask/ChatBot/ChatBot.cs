@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using BotGames.Thousand;
 using WinterTask.Clients;
 
-namespace WinterTask
+namespace WinterTask.ChatBot
 {
     public class ChatBot : IChatBot
     {

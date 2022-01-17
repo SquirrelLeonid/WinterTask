@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WinterTask
+namespace WinterTask.ChatBot
 {
     public class BotMessage
     {

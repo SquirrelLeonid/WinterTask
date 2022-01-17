@@ -1,6 +1,6 @@
 ﻿using WinterTask.Clients;
 
-namespace WinterTask
+namespace WinterTask.ChatBot
 {
     public interface IChatBot
     {

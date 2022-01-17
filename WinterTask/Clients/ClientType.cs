@@ -1,6 +1,6 @@
 ﻿namespace WinterTask.Clients
 {
-    public enum BotType
+    public enum ClientType
     {
         Telegram,
         Discord

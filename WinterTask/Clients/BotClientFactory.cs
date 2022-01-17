@@ -4,12 +4,12 @@ namespace WinterTask.Clients
 {
     public class BotClientFactory
     {
-        public static IClient GetBotClient(BotType clientType)
+        public static IClient GetBotClient(ClientType clientType)
         {
             return clientType switch
             {
-                BotType.Telegram => new TelegramClient.TelegramClient(),
-                BotType.Discord => new DiscordClient.DiscordClient(),
+                ClientType.Telegram => new TelegramClient.TelegramClient(),
+                ClientType.Discord => new DiscordClient.DiscordClient(),
                 _ => throw new ArgumentException($"Unknown bot type {clientType}")
             };
         }

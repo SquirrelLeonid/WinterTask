@@ -1,4 +1,4 @@
-﻿namespace WinterTask
+﻿namespace WinterTask.Clients
 {
     public class User
     {

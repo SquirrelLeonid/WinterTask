@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BotGames.Thousand;
 
-namespace WinterTask
+namespace WinterTask.ChatBot
 {
     public class BotReplyBuilder
     {
