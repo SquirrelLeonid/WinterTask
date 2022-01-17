@@ -6,12 +6,12 @@ namespace WinterTask.Clients
     {
         public void LaunchClient();
 
-        public Task ReplyMessage(long chatId, string message);
+        public Task ReplyMessage(string chatId, string message);
 
         public void ShutdownClient();
 
-        public Task<int> CreatePoll(long chatId);
+        public Task<int> CreatePoll(string chatId);
 
-        public Task<User[]> GetPollUsers(int pollMessageId, long chatId);
+        public Task<User[]> GetPollUsers(int pollMessageId, string chatId);
     }
 }

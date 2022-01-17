@@ -12,6 +12,7 @@ namespace WinterTask.Clients.DiscordClient
         public async void LaunchClient()
         {
             base.Log += Log;
+            MessageReceived += OnMessageReceived;
             await LoginAsync(TokenType.Bot, Token);
             await StartAsync();
         }
@@ -21,19 +22,31 @@ namespace WinterTask.Clients.DiscordClient
             throw new NotImplementedException();
         }
 
-        public Task<int> CreatePoll(long chatId)
+        public Task<int> CreatePoll(string chatId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<User[]> GetPollUsers(int pollMessageId, long chatId)
+        public Task<User[]> GetPollUsers(int pollMessageId, string chatId)
         {
             throw new NotImplementedException();
         }
 
-        Task IClient.ReplyMessage(long chatId, string message)
+        public Task ReplyMessage(string chatId, string message)
         {
             throw new NotImplementedException();
+        }
+
+
+        private Task OnMessageReceived(SocketMessage socketMessage)
+        {
+            Console.WriteLine($"Got message '{socketMessage.Content}' from '{socketMessage.Author}'");
+
+            if (!ShouldContinue(socketMessage))
+                return Task.CompletedTask;
+
+            ReplyMessage(socketMessage.Channel.Id.ToString(), socketMessage.Content);
+            return Task.CompletedTask;
         }
 
         private new Task Log(LogMessage msg)
@@ -42,9 +55,10 @@ namespace WinterTask.Clients.DiscordClient
             return Task.CompletedTask;
         }
 
-        public void ReplyMessage(long chatId, string message)
+        private bool ShouldContinue(SocketMessage socketMessage)
         {
-            throw new NotImplementedException();
+            return socketMessage.Content is not null &&
+                   socketMessage.Content.Length > 0;
         }
     }
 }

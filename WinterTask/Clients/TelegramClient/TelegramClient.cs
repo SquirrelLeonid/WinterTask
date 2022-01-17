@@ -17,7 +17,7 @@ namespace WinterTask.Clients.TelegramClient
     {
         private const string Token = "5030819786:AAFQCHcxdIxcr1c3ihCfdwSaQn_zBFOKiY0";
         private readonly BotMessageMaker botMessageMaker;
-        private readonly Dictionary<long, IChatBot> bots;
+        private readonly Dictionary<string, IChatBot> bots;
         private readonly CancellationTokenSource cts = new();
         private readonly Dictionary<string, List<User>> polls;
         private readonly ReceiverOptions receiverOptions = new();
@@ -25,7 +25,7 @@ namespace WinterTask.Clients.TelegramClient
         public TelegramClient() : base(Token)
         {
             receiverOptions.ThrowPendingUpdates = true;
-            bots = new Dictionary<long, IChatBot>();
+            bots = new Dictionary<string, IChatBot>();
             polls = new Dictionary<string, List<User>>();
             botMessageMaker = new BotMessageMaker();
         }
@@ -46,16 +46,17 @@ namespace WinterTask.Clients.TelegramClient
             cts.Cancel();
         }
 
-        public async Task ReplyMessage(long chatId, string message)
+        public async Task ReplyMessage(string chatId, string message)
         {
             if (!bots.ContainsKey(chatId))
                 bots[chatId] = ChatBotFactory.CreateChatBot(chatId);
+
             var botReply = bots[chatId].ReplyToMessage(this, message);
             var botMessage = botMessageMaker.GetMessage(botReply);
             await SendTextMessage(chatId, botMessage.Text, botMessage.AvailableOperations);
         }
 
-        public async Task<User[]> GetPollUsers(int pollMessageId, long chatId)
+        public async Task<User[]> GetPollUsers(int pollMessageId, string chatId)
         {
             var poll = await this.StopPollAsync(
                 chatId,
@@ -66,7 +67,7 @@ namespace WinterTask.Clients.TelegramClient
             return users.ToArray();
         }
 
-        public async Task<int> CreatePoll(long chatId)
+        public async Task<int> CreatePoll(string chatId)
         {
             var question = "Do you want to play?";
             var options = new[]
@@ -99,7 +100,7 @@ namespace WinterTask.Clients.TelegramClient
             if (update.Type == UpdateType.Message || update.Type == UpdateType.CallbackQuery)
             {
                 Console.WriteLine($"Received a '{messageText}' message in chat {chatId.Value}.");
-                await ReplyMessage(chatId.Value, messageText);
+                await ReplyMessage(chatId.Value.ToString(), messageText);
             }
 
             if (update.Type == UpdateType.PollAnswer && update.PollAnswer is not null)
@@ -148,7 +149,7 @@ namespace WinterTask.Clients.TelegramClient
             return Task.CompletedTask;
         }
 
-        private async Task SendTextMessage(long chatId, string text, Dictionary<string, string> availableCommands)
+        private async Task SendTextMessage(string chatId, string text, Dictionary<string, string> availableCommands)
         {
             var rows = new List<List<InlineKeyboardButton>>();
             List<InlineKeyboardButton> row = null;

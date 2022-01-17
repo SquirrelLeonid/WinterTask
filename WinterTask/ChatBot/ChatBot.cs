@@ -7,10 +7,10 @@ namespace WinterTask.ChatBot
 {
     public class ChatBot : IChatBot
     {
-        private readonly long chatId;
+        private readonly string chatId;
         private ThousandGame game;
 
-        public ChatBot(long id)
+        public ChatBot(string id)
         {
             chatId = id;
         }
