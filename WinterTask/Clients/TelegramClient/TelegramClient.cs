@@ -56,18 +56,18 @@ namespace WinterTask.Clients.TelegramClient
             await SendTextMessage(chatId, botMessage.Text, botMessage.AvailableOperations);
         }
 
-        public async Task<User[]> GetPollUsers(int pollMessageId, string chatId)
+        public async Task<User[]> GetPollUsers(string pollMessageId, string chatId)
         {
             var poll = await this.StopPollAsync(
                 chatId,
-                pollMessageId,
+                int.Parse(pollMessageId),
                 cancellationToken: cts.Token);
             var users = polls[poll.Id];
             polls.Remove(poll.Id);
             return users.ToArray();
         }
 
-        public async Task<int> CreatePoll(string chatId)
+        public async Task<string> CreatePoll(string chatId)
         {
             var question = "Do you want to play?";
             var options = new[]
@@ -83,7 +83,7 @@ namespace WinterTask.Clients.TelegramClient
                 allowsMultipleAnswers: false,
                 isAnonymous: false,
                 cancellationToken: cts.Token);
-            return pollMessage.MessageId;
+            return pollMessage.MessageId.ToString();
         }
 
         private async Task OnUpdateAsync(
@@ -109,7 +109,9 @@ namespace WinterTask.Clients.TelegramClient
                 if (!polls.ContainsKey(answer.PollId))
                     polls[answer.PollId] = new List<User>();
 
-                polls[answer.PollId].Add(new User(answer.User.Id, answer.User.Username));
+                polls[answer.PollId].Add(new User(
+                    answer.User.Id.ToString(),
+                    answer.User.Username));
 
                 Console.WriteLine(answer.User.Username + $" answered '{answer.OptionIds.First()}'");
             }

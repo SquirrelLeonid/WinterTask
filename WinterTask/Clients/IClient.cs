@@ -10,8 +10,8 @@ namespace WinterTask.Clients
 
         public void ShutdownClient();
 
-        public Task<int> CreatePoll(string chatId);
+        public Task<string> CreatePoll(string chatId);
 
-        public Task<User[]> GetPollUsers(int pollMessageId, string chatId);
+        public Task<User[]> GetPollUsers(string pollMessageId, string chatId);
     }
 }
